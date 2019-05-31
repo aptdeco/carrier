@@ -51,8 +51,8 @@ defmodule Carrier.Server do
     # If there's an empty response, that means there was no match. If there are
     # multiple matches, we are only going to use the first match.
     case Jason.decode!(resp.body) do
-      [] -> {:invalid, address}
-      [match | _rest] -> {:valid, parse_match(match)}
+      [] -> {:error, :invalid_address}
+      [match | _rest] -> {:ok, parse_match(match)}
     end
   end
 
@@ -78,10 +78,10 @@ defmodule Carrier.Server do
   defp parse_matches(input, output) do
     input
     |> Enum.with_index()
-    |> Enum.map(fn {{street, city, state, zip}, index} ->
+    |> Enum.map(fn {_, index} ->
       case Enum.find(output, fn %{"input_index" => id} -> id == index end) do
-        nil -> {:invalid, {street, city, state, zip}}
-        match -> {:valid, parse_match(match)}
+        nil -> {:error, :invalid_address}
+        match -> {:ok, parse_match(match)}
       end
     end)
   end
