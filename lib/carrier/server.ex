@@ -110,8 +110,8 @@ defmodule Carrier.Server do
     do: "#{match["components"]["zipcode"]}"
 
   defp parse_location(match) do
-    lng = String.to_float(match["components"]["longitude"])
-    lat = String.to_float(match["components"]["latitude"])
+    lng = match["components"]["longitude"]
+    lat = match["components"]["latitude"]
 
     %Geo.Point{coordinates: {lng, lat}}
   end
