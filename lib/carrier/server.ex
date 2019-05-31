@@ -94,8 +94,7 @@ defmodule Carrier.Server do
       city: parse_city(match),
       state: parse_state(match),
       zip_code: parse_zip(match),
-      latitude: parse_latitude(match),
-      longitude: parse_longitude(match)
+      location: parse_location(match)
     }
 
   # Parsers to get the street, city, state, and zipcode from a match.
@@ -110,8 +109,12 @@ defmodule Carrier.Server do
   defp parse_zip(match),
     do: "#{match["components"]["zipcode"]}"
 
-  defp parse_latitude(match), do: match["components"]["latitude"]
-  defp parse_longitude(match), do: match["components"]["longitude"]
+  defp parse_location(match) do
+    lng = String.to_float(match["components"]["longitude"])
+    lat = String.to_float(match["components"]["latitude"])
+
+    %Geo.Point{coordinates: {lng, lat}}
+  end
 
   # Converts the address into a map so that we can POST them as JSON.
   defp address_to_map({address, index}) do
