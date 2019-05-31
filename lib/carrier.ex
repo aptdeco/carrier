@@ -11,9 +11,9 @@ defmodule Carrier do
     import Supervisor.Spec, warn: false
 
     children = [worker(Server, [])]
-    opts     = [strategy: :one_for_one, name: Carrier.Supervisor]
+    opts = [strategy: :one_for_one, name: Carrier.Supervisor]
 
-    Supervisor.start_link children, opts
+    Supervisor.start_link(children, opts)
   end
 
   @doc """
@@ -62,8 +62,8 @@ defmodule Carrier do
 
   Easy!
   """
-  def verify_one({street, city, state, zip}),
-    do: Server.verify_one({street, city, state, zip})
+  def verify_one(address),
+    do: Server.verify_one(address)
 
   @doc """
   This is the public method for validating many addresses. This accepts a list

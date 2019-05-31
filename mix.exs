@@ -6,17 +6,17 @@ defmodule Carrier.Mixfile do
   def project do
     [
       app: :carrier,
-     version: @version,
-     elixir: "~> 1.4",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     maintainers: ["Mylan Connolly"],
-     description: "Elixir library for interacting with SmartyStreets",
-     source_url: "https://github.com/mylanconnolly/carrier",
-     package: package(),
-     docs: docs(),
-     deps: deps()
-   ]
+      version: @version,
+      elixir: "~> 1.8",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      maintainers: ["Samuel Dost"],
+      description: "Elixir library for interacting with SmartyStreets",
+      source_url: "https://github.com/aptdeco/carrier",
+      package: package(),
+      docs: docs(),
+      deps: deps()
+    ]
   end
 
   defp docs do
@@ -29,18 +29,17 @@ defmodule Carrier.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 0.13"},
-      {:poison, "~> 3.1"},
-      {:coverex, "~> 1.4.1", only: :test},
-      {:ex_doc, "~> 0.10",  only: :dev}
+      {:mojito, "~> 0.3.0"},
+      {:jason, "~> 1.1"},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]
   end
 
   defp package do
     [
-      maintainers: ["Mylan Connolly"],
+      maintainers: ["Samuel Dost"],
       licenses: ["MIT"],
-      links: %{github: "https://github.com/mylanconnolly/carrier"}
+      links: %{github: "https://github.com/aptdeco/carrier"}
     ]
   end
 end
