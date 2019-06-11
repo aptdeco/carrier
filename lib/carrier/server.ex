@@ -100,8 +100,17 @@ defmodule Carrier.Server do
   # Parsers to get the street, city, state, and zipcode from a match.
   defp parse_number(match), do: match["components"]["primary_number"]
 
-  defp parse_street(match),
-    do: "#{match["components"]["street_name"]} #{match["components"]["street_suffix"]}"
+  defp parse_street(match) do
+    components = components(match)
+
+    if Map.has_key?(components, "street_predirection") do
+      "#{components["street_predirection"]} #{components["street_name"]} #{
+        components["street_suffix"]
+      }"
+    else
+      "#{components["street_name"]} #{components["street_suffix"]}"
+    end
+  end
 
   defp parse_city(match), do: match["components"]["city_name"]
   defp parse_state(match), do: match["components"]["state_abbreviation"]
@@ -110,11 +119,15 @@ defmodule Carrier.Server do
     do: "#{match["components"]["zipcode"]}"
 
   defp parse_location(match) do
-    lng = match["metadata"]["longitude"]
-    lat = match["metadata"]["latitude"]
+    metadata = metadata(match)
+    lng = metadata["longitude"]
+    lat = metadata["latitude"]
 
     %Geo.Point{coordinates: {lng, lat}}
   end
+
+  defp components(match), do: match["components"]
+  defp metadata(match), do: match["metadata"]
 
   # Converts the address into a map so that we can POST them as JSON.
   defp address_to_map({address, index}) do
