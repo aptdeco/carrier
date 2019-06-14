@@ -103,12 +103,17 @@ defmodule Carrier.Server do
   defp parse_street(match) do
     components = components(match)
 
-    if Map.has_key?(components, "street_predirection") do
-      "#{components["street_predirection"]} #{components["street_name"]} #{
-        components["street_suffix"]
-      }"
-    else
-      "#{components["street_name"]} #{components["street_suffix"]}"
+    street =
+      case Map.has_key?(components, "street_predirection") do
+        true -> "#{components["street_predirection"]} "
+        false -> ""
+      end
+
+    street = street <> "#{components["street_name"]} #{components["street_suffix"]}"
+
+    case Map.has_key?(components, "street_postdirection") do
+      true -> street <> " #{components["street_postdirection"]} "
+      false -> street
     end
   end
 
