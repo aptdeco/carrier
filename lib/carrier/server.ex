@@ -128,7 +128,11 @@ defmodule Carrier.Server do
     lng = metadata["longitude"]
     lat = metadata["latitude"]
 
-    %Geo.Point{coordinates: {lng, lat}}
+    if is_nil(lng) or is_nil(lat) do
+      nil
+    else
+      %Geo.Point{coordinates: {lng, lat}}
+    end
   end
 
   defp components(match), do: match["components"]

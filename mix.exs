@@ -1,7 +1,7 @@
 defmodule Carrier.Mixfile do
   use Mix.Project
 
-  @version "1.0.5"
+  @version "1.1.3"
 
   def project do
     [
@@ -35,7 +35,8 @@ defmodule Carrier.Mixfile do
       {:mojito, "~> 0.5.0"},
       {:jason, "~> 1.1"},
       {:geo, "~> 3.0"},
-      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
+      {:version_tasks, "~> 0.11.3", runtime: false}
     ]
   end
 
