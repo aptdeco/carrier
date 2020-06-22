@@ -32,10 +32,10 @@ defmodule Carrier.Mixfile do
 
   defp deps do
     [
-      {:mojito, "~> 0.6.0"},
-      {:jason, "~> 1.1"},
+      {:mojito, "~> 0.7.2"},
+      {:jason, "~> 1.2"},
       {:geo, "~> 3.0"},
-      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false},
       {:version_tasks, "~> 0.11.3", runtime: false}
     ]
   end
